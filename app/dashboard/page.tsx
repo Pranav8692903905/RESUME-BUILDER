@@ -1,0 +1,231 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Plus, FileText, BarChart3, Calendar, MoreVertical, Target, Zap } from "lucide-react"
+import { useAuth } from "@/components/auth/auth-context"
+import type { Resume } from "@/components/resume/resume-context"
+import Link from "next/link"
+
+export default function DashboardPage() {
+  const { isAuthenticated, isLoading, user, signOut } = useAuth()
+  const [resumes, setResumes] = useState<Resume[]>([])
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push("/auth")
+    }
+  }, [isAuthenticated, isLoading, router])
+
+  useEffect(() => {
+    // Load saved resumes
+    const savedResumes = JSON.parse(localStorage.getItem("resumate_resumes") || "[]")
+    setResumes(savedResumes)
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isAuthenticated) {
+    return null
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-950">
+      {/* Header */}
+      <header className="border-b border-primary/20 bg-gradient-to-r from-slate-900/90 via-slate-900/95 to-slate-900/90 backdrop-blur-md">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="h-8 w-8 bg-gradient-to-br from-primary via-secondary to-accent rounded-lg flex items-center justify-center shadow-lg">
+                <FileText className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                ResuMate
+              </span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-muted-foreground">
+                Welcome, <span className="text-primary font-medium">{user?.name}</span>
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-primary/30 hover:bg-primary/10 text-primary hover:text-primary bg-transparent"
+                onClick={signOut}
+              >
+                Sign Out
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            Your Dashboard
+          </h1>
+          <p className="text-muted-foreground">Manage your resumes and track your job search progress</p>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Link href="/builder">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer glass-effect border-primary/20 hover:border-primary/40 group">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center group-hover:from-secondary group-hover:to-accent transition-all duration-300 shadow-lg">
+                    <Plus className="h-5 w-5 text-white" />
+                  </div>
+                  <CardTitle className="text-lg text-primary">Create Resume</CardTitle>
+                </div>
+                <CardDescription>Build a professional resume from scratch</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/analyzer">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer glass-effect border-secondary/20 hover:border-secondary/40 group">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <div className="h-10 w-10 bg-gradient-to-br from-secondary to-accent rounded-lg flex items-center justify-center group-hover:from-accent group-hover:to-primary transition-all duration-300 shadow-lg">
+                    <BarChart3 className="h-5 w-5 text-white" />
+                  </div>
+                  <CardTitle className="text-lg text-secondary">Analyze Resume</CardTitle>
+                </div>
+                <CardDescription>Get ATS compatibility score and tips</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/matcher">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer glass-effect border-accent/20 hover:border-accent/40 group">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <div className="h-10 w-10 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center group-hover:from-primary group-hover:to-secondary transition-all duration-300 shadow-lg">
+                    <Target className="h-5 w-5 text-white" />
+                  </div>
+                  <CardTitle className="text-lg text-accent">Job Matcher</CardTitle>
+                </div>
+                <CardDescription>Match resume against job descriptions</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+
+          <Link href="/ai-tools">
+            <Card className="hover:shadow-xl transition-all duration-300 cursor-pointer glass-effect border-primary/20 hover:border-primary/40 group">
+              <CardHeader>
+                <div className="flex items-center space-x-2">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary via-secondary to-accent rounded-lg flex items-center justify-center group-hover:shadow-xl transition-all duration-300 shadow-lg color-pulse">
+                    <Zap className="h-5 w-5 text-white" />
+                  </div>
+                  <CardTitle className="text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    AI Tools
+                  </CardTitle>
+                </div>
+                <CardDescription>Cover letters, LinkedIn bios & more</CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
+        </div>
+
+        {/* Recent Resumes */}
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+              Your Resumes
+            </h2>
+            <Link href="/builder">
+              <Button className="bg-gradient-to-r from-primary via-secondary to-accent hover:from-accent hover:via-primary hover:to-secondary transition-all duration-300 shadow-lg hover:shadow-xl">
+                <Plus className="h-4 w-4 mr-2" />
+                New Resume
+              </Button>
+            </Link>
+          </div>
+
+          {resumes.length === 0 ? (
+            <Card className="text-center py-12 glass-effect border-primary/20">
+              <CardContent>
+                <div className="h-12 w-12 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileText className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-primary">No resumes yet</h3>
+                <p className="text-muted-foreground mb-4">Create your first professional resume to get started</p>
+                <Link href="/builder">
+                  <Button className="bg-gradient-to-r from-primary via-secondary to-accent hover:from-accent hover:via-primary hover:to-secondary transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Resume
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resumes.map((resume) => (
+                <Card
+                  key={resume.id}
+                  className="hover:shadow-xl transition-all duration-300 glass-effect border-primary/20 hover:border-primary/40"
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <CardTitle className="text-lg text-primary">{resume.title}</CardTitle>
+                        <CardDescription className="flex items-center space-x-2 mt-1">
+                          <Calendar className="h-3 w-3 text-secondary" />
+                          <span>Updated {new Date(resume.updatedAt).toLocaleDateString()}</span>
+                        </CardDescription>
+                      </div>
+                      <Button variant="ghost" size="sm" className="hover:bg-primary/10">
+                        <MoreVertical className="h-4 w-4 text-primary" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex items-center justify-between">
+                      <Badge
+                        variant="secondary"
+                        className="capitalize bg-gradient-to-r from-secondary/20 to-accent/20 text-secondary border-secondary/30"
+                      >
+                        {resume.template}
+                      </Badge>
+                      <div className="flex space-x-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-primary/30 hover:bg-primary/10 text-primary hover:text-primary bg-transparent"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="border-secondary/30 hover:bg-secondary/10 text-secondary hover:text-secondary bg-transparent"
+                        >
+                          Download
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
