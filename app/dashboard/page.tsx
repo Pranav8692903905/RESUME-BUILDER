@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { ScrollAnimation } from "@/components/scroll-animation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plus, FileText, BarChart3, Calendar, MoreVertical, Target, Zap } from "lucide-react"
@@ -73,7 +74,7 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* Main Content */}
+        {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
@@ -225,6 +226,23 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+
+        {/* Image left + bold writeup right */}
+        <div className="mt-10 w-full">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-shrink-0">
+              <img src="/example.avif" alt="Dashboard visual" className="h-80 w-56 rounded-lg shadow-lg object-cover" />
+            </div>
+            <ScrollAnimation animation="fadeInRight" delay={100} className="flex-1">
+              <h3 className="text-2xl font-bold text-primary mb-2">Craft stronger resumes</h3>
+              <p className="font-bold text-lg text-muted-foreground">
+                Highlight achievements, tailor your resume to job descriptions, and optimize for ATS compatibility.
+                Use ResuMate to create polished, professional resumes that get noticed.
+              </p>
+            </ScrollAnimation>
+          </div>
+        </div>
+
       </div>
     </div>
   )
