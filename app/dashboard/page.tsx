@@ -243,6 +243,32 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Final section: writeup left + image right */}
+        <div className="mt-12">
+          <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6">
+            <ScrollAnimation animation="fadeInLeft" delay={100} className="flex-1 text-left">
+              <h3 className="text-2xl font-extrabold text-primary mb-2">Improve Your Resume</h3>
+              <p className="text-muted-foreground mb-4 font-semibold">
+                Tailor your resume to each job, highlight measurable achievements, and include keywords that match the role.
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-1 font-medium">
+                <li><strong>Highlight achievements:</strong> Prefer numbers and outcomes over vague duties.</li>
+                <li><strong>Customize for role:</strong> Mirror job keywords and prioritize relevant skills.</li>
+                <li><strong>Keep it concise:</strong> One to two pages with clear section headings.</li>
+              </ul>
+            </ScrollAnimation>
+            <div className="flex-shrink-0">
+              <img
+                src="/example 2.webp"
+                alt="Second dashboard image"
+                className="rounded-lg shadow-lg object-cover"
+                style={{ width: 240, height: 300 }}
+              />
+            </div>
+          </div>
+        </div>
+        
+
       </div>
     </div>
   )
