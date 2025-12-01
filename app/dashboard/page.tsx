@@ -277,6 +277,30 @@ export default function DashboardPage() {
           </div>
         </div>
         
+        {/* Example 3: image left + writeup right (responsive) */}
+        <div className="mt-6">
+          <div className="w-full flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex-shrink-0">
+              <img
+                src="/example 3.jpg"
+                alt="Example 3"
+                className="rounded-lg shadow-lg object-cover"
+                style={{ width: 240, height: 300 }}
+              />
+            </div>
+            <ScrollAnimation animation="fadeInRight" delay={100} className="flex-1 text-left md:text-right md:pl-4">
+              <h3 className="text-2xl font-extrabold text-primary mb-2">Resume Tips & Best Practices</h3>
+              <p className="text-muted-foreground mb-3 font-semibold">
+                Make your resume stand out with clear formatting, measurable achievements, and tailored keywords.
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-1 font-medium">
+                <li><strong>Quantify achievements:</strong> Use numbers to show impact.</li>
+                <li><strong>Tailor per role:</strong> Mirror job keywords and prioritize relevant skills.</li>
+                <li><strong>Concise & clean:</strong> Use clear headings and bullet points.</li>
+              </ul>
+            </ScrollAnimation>
+          </div>
+        </div>
         
 
       </div>
