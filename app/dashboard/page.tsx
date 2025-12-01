@@ -83,6 +83,8 @@ export default function DashboardPage() {
           <p className="text-muted-foreground">Manage your resumes and track your job search progress</p>
         </div>
 
+        
+
         {/* Quick Actions */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Link href="/builder">
@@ -227,6 +229,13 @@ export default function DashboardPage() {
           )}
         </div>
 
+        {/* Centered example header above images (uppercase + separators) */}
+        <div className="w-full flex flex-col items-center my-12">
+          <hr className="w-1/4 border-t border-primary/20 mb-4" />
+          <h2 className="text-3xl font-bold text-center text-primary uppercase tracking-wide"> some example of resume</h2>
+          <hr className="w-1/4 border-t border-primary/20 mt-4" />
+        </div>
+
         {/* Image left + bold writeup right */}
         <div className="mt-10 w-full">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -267,6 +276,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </div>
+        
         
 
       </div>
