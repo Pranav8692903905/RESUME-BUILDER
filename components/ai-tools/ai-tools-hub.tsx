@@ -7,7 +7,17 @@ import { LinkedInBioGenerator } from "./linkedin-bio-generator"
 
 export function AIToolsHub() {
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: "url('/1715371733808.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(2,6,23,0.5)',
+        backgroundBlendMode: 'overlay',
+      }}
+    >
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">

@@ -128,7 +128,7 @@ export function ResumeAnalyzer() {
     <div
       className="min-h-screen bg-background"
       style={{
-        backgroundImage: "url('/AI-Job.avif')",
+        backgroundImage: "url('/any.avif')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
