@@ -44,7 +44,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: "url('/AI-Job.avif')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(2,6,23,0.6)',
+        backgroundBlendMode: 'overlay',
+      }}
+    >
       {/* Header */}
       <header className="border-b border-primary/20 bg-gradient-to-r from-slate-900/90 via-slate-900/95 to-slate-900/90 backdrop-blur-md">
         <div className="container mx-auto px-4 py-4">
@@ -303,6 +313,24 @@ export default function DashboardPage() {
         </div>
         
 
+        {/* Footer: About / Content / Privacy + name & year */}
+        <footer className="border-t border-primary/20 bg-slate-900/80 mt-8">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground">
+              <div className="mb-2 md:mb-0">
+                <span className="text-primary font-medium">ResuMate</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Link href="/about" className="hover:text-primary">About</Link>
+                <Link href="/content-policy" className="hover:text-primary">Content</Link>
+                <Link href="/privacy" className="hover:text-primary">Privacy</Link>
+              </div>
+              <div className="mt-2 md:mt-0 text-xs text-muted-foreground/80">
+                {user?.name ?? 'ResuMate'} • © {new Date().getFullYear()}
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   )
