@@ -108,6 +108,7 @@ export function ResumeAnalyzer() {
     }
 
     setAnalysisData(mockAnalysis)
+    setIsAnalyzing(false)
     setIsLoading(false) // Set isLoading to false after analysis
   }
 
@@ -124,7 +125,17 @@ export function ResumeAnalyzer() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen bg-background"
+      style={{
+        backgroundImage: "url('/AI-Job.avif')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: 'rgba(2,6,23,0.6)',
+        backgroundBlendMode: 'overlay',
+      }}
+    >
       {/* Header */}
       <header className="border-b border-border bg-card/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
@@ -153,7 +164,7 @@ export function ResumeAnalyzer() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
+                <div className="relative border-2 border-dashed border-border rounded-lg p-8 text-center">
                   <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <div className="space-y-2">
                     <p className="text-sm font-medium">Click to upload or drag and drop</p>

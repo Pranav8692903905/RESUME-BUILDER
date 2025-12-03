@@ -154,7 +154,7 @@ export function JobMatcher() {
 
       <div className="container mx-auto px-4 py-8">
         {!matchData ? (
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">Match Your Resume to Job Descriptions</h2>
               <p className="text-muted-foreground text-lg">
@@ -162,7 +162,7 @@ export function JobMatcher() {
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {/* Resume Upload */}
               <Card>
                 <CardHeader>
@@ -170,7 +170,7 @@ export function JobMatcher() {
                   <CardDescription>Upload your current resume for analysis</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+                  <div className="relative border-2 border-dashed border-border rounded-lg p-6 text-center">
                     <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
                     <div className="space-y-2">
                       <p className="text-sm font-medium">Click to upload or drag and drop</p>
@@ -202,7 +202,7 @@ export function JobMatcher() {
                   <CardDescription>Paste the job description you want to match against</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="jobTitle">Job Title</Label>
                       <Input
@@ -312,7 +312,7 @@ export function JobMatcher() {
 
             {/* Detailed Analysis */}
             <Tabs defaultValue="recommendations" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
                 <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
                 <TabsTrigger value="skills">Skills Gap</TabsTrigger>
                 <TabsTrigger value="projects">Projects</TabsTrigger>
