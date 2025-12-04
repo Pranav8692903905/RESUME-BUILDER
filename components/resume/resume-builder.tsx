@@ -166,7 +166,7 @@ export function ResumeBuilder() {
                 <CardHeader>
                   <CardTitle>Resume Settings</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
                   <div>
                     <label className="text-sm font-medium">Template</label>
                     <TemplateSelector
@@ -177,6 +177,59 @@ export function ResumeBuilder() {
                       }}
                       selectedTemplate={currentResume.template}
                     />
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <label className="text-sm font-medium block">Header Color</label>
+                    <p className="text-xs text-muted-foreground mb-3">Choose a color for your resume header and section titles</p>
+                    <div className="grid grid-cols-8 gap-3">
+                      {[
+                        { name: "Blue", value: "#3b82f6" },
+                        { name: "Indigo", value: "#6366f1" },
+                        { name: "Purple", value: "#8b5cf6" },
+                        { name: "Pink", value: "#ec4899" },
+                        { name: "Red", value: "#ef4444" },
+                        { name: "Orange", value: "#f97316" },
+                        { name: "Green", value: "#10b981" },
+                        { name: "Teal", value: "#14b8a6" },
+                        { name: "Cyan", value: "#06b6d4" },
+                        { name: "Navy", value: "#1e40af" },
+                        { name: "Slate", value: "#475569" },
+                        { name: "Black", value: "#000000" },
+                      ].map((color) => (
+                        <button
+                          key={color.value}
+                          onClick={() => {
+                            if (currentResume) {
+                              setCurrentResume({ ...currentResume, headerColor: color.value })
+                            }
+                          }}
+                          className={`w-12 h-12 rounded-lg transition-all hover:scale-110 ${
+                            currentResume.headerColor === color.value
+                              ? "ring-2 ring-offset-2 ring-primary"
+                              : "hover:ring-2 hover:ring-offset-2 hover:ring-gray-300"
+                          }`}
+                          style={{ backgroundColor: color.value }}
+                          title={color.name}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex items-center gap-2 mt-3">
+                      <input
+                        type="color"
+                        value={currentResume.headerColor || "#3b82f6"}
+                        onChange={(e) => {
+                          if (currentResume) {
+                            setCurrentResume({ ...currentResume, headerColor: e.target.value })
+                          }
+                        }}
+                        className="w-12 h-12 rounded-lg cursor-pointer"
+                      />
+                      <div className="flex-1">
+                        <p className="text-xs font-medium">Custom Color</p>
+                        <p className="text-xs text-muted-foreground">{currentResume.headerColor || "#3b82f6"}</p>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

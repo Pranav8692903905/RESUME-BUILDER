@@ -15,6 +15,7 @@ export interface Resume {
   id: string
   title: string
   template: "modern" | "minimal" | "corporate"
+  headerColor?: string
   sections: ResumeSection[]
   createdAt: Date
   updatedAt: Date
