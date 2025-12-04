@@ -63,8 +63,18 @@ export function ResumeBuilder() {
 
   if (!currentResume) {
     return (
-      <div className="min-h-screen bg-background p-6">
-        <div className="max-w-4xl mx-auto">
+      <div className="min-h-screen bg-background p-6 relative">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90"
+            style={{ backgroundImage: "url('/resume.avif')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/90 to-background/80" />
+        </div>
+        
+        {/* Content */}
+        <div className="max-w-4xl mx-auto relative z-10">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2">Choose a Template</h1>
             <p className="text-muted-foreground">Select a professional template to get started</p>
@@ -76,9 +86,18 @@ export function ResumeBuilder() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90"
+          style={{ backgroundImage: "url('/resume.avif')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/90 to-background/80" />
+      </div>
+      
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50 relative">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -107,7 +126,7 @@ export function ResumeBuilder() {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-6 relative z-10">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="edit">Edit</TabsTrigger>
