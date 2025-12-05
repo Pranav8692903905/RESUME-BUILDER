@@ -1,14 +1,18 @@
 "use client"
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { FileText, Linkedin, MessageSquare, Zap } from "lucide-react"
+import { FileText, Linkedin, MessageSquare, Zap, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { CoverLetterGenerator } from "./cover-letter-generator"
 import { LinkedInBioGenerator } from "./linkedin-bio-generator"
 
 export function AIToolsHub() {
+  const [showChatbot, setShowChatbot] = useState(false)
+
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen relative"
       style={{
         backgroundImage: "url('/1715371733808.jpg')",
         backgroundSize: 'cover',
@@ -92,6 +96,107 @@ export function AIToolsHub() {
             </div>
           </TabsContent>
         </Tabs>
+      </div>
+
+      {/* Floating AI Chatbot Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        {!showChatbot ? (
+          <button
+            onClick={() => setShowChatbot(true)}
+            className="group relative"
+            aria-label="Open AI Assistant"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-full blur-xl opacity-70 group-hover:opacity-100 transition-opacity animate-pulse" />
+            <div className="relative w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-2xl hover:scale-110 transition-transform duration-300">
+              <img
+                src="/AI-Job.avif"
+                alt="AI Assistant"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse" />
+          </button>
+        ) : (
+          <div className="bg-white rounded-2xl shadow-2xl w-96 max-h-[600px] flex flex-col overflow-hidden border-2 border-primary/20">
+            {/* Chatbot Header */}
+            <div 
+              className="p-4 text-white relative overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`,
+              }}
+            >
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+                    <img
+                      src="/AI-Job.avif"
+                      alt="AI Assistant"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-lg">AI Career Assistant</h3>
+                    <p className="text-xs opacity-90">Online • Ready to help</p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowChatbot(false)}
+                  className="text-white hover:bg-white/20"
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Chatbot Body */}
+            <div className="flex-1 p-4 bg-gray-50 overflow-y-auto">
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+                    <img
+                      src="/AI-Job.avif"
+                      alt="AI"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="bg-white rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[80%]">
+                    <p className="text-sm text-gray-800">
+                      👋 Hello! I'm your AI Career Assistant. I can help you with:
+                    </p>
+                    <ul className="text-xs text-gray-600 mt-2 space-y-1">
+                      <li>✨ Resume optimization tips</li>
+                      <li>💼 Cover letter suggestions</li>
+                      <li>🎯 Career advice</li>
+                      <li>📝 LinkedIn profile enhancement</li>
+                    </ul>
+                    <p className="text-xs text-gray-500 mt-2">How can I assist you today?</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chatbot Input */}
+            <div className="p-4 bg-white border-t">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Type your message..."
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                />
+                <Button
+                  className="rounded-full px-6"
+                  style={{
+                    background: `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`,
+                  }}
+                >
+                  Send
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
