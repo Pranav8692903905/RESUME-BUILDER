@@ -12,45 +12,125 @@ export function ResumePreview() {
   const summarySection = currentResume.sections.find((s) => s.type === "summary")
   const experienceSection = currentResume.sections.find((s) => s.type === "experience")
   const headerColor = currentResume.headerColor || "#3b82f6"
+  const template = currentResume.template
+
+  // Modern Template - Full width colored header with centered content
+  const renderModernHeader = () => (
+    <div style={{ backgroundColor: headerColor, padding: "32px" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
+        {personalSection?.content.photoUrl && (
+          <img
+            src={personalSection.content.photoUrl}
+            alt="Profile"
+            style={{
+              width: "112px",
+              height: "112px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              border: "4px solid white",
+              flexShrink: 0,
+            }}
+          />
+        )}
+        <div style={{ textAlign: "center", flex: 1 }}>
+          <h1 style={{ fontSize: "30px", fontWeight: "bold", color: "white", margin: "0 0 8px 0" }}>
+            {personalSection?.content.fullName || "Your Name"}
+          </h1>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", fontSize: "14px", color: "rgba(255,255,255,0.9)" }}>
+            {personalSection?.content.email && <span>{personalSection.content.email}</span>}
+            {personalSection?.content.phone && <span>{personalSection.content.phone}</span>}
+            {personalSection?.content.location && <span>{personalSection.content.location}</span>}
+            {personalSection?.content.website && <span>{personalSection.content.website}</span>}
+            {personalSection?.content.linkedin && <span>{personalSection.content.linkedin}</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  // Minimal Template - Simple header with side-by-side photo and text
+  const renderMinimalHeader = () => (
+    <div style={{ padding: "32px", borderBottom: `3px solid ${headerColor}` }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        {personalSection?.content.photoUrl && (
+          <img
+            src={personalSection.content.photoUrl}
+            alt="Profile"
+            style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "8px",
+              objectFit: "cover",
+              border: `3px solid ${headerColor}`,
+              flexShrink: 0,
+            }}
+          />
+        )}
+        <div style={{ flex: 1 }}>
+          <h1 style={{ fontSize: "32px", fontWeight: "bold", color: headerColor, margin: "0 0 12px 0" }}>
+            {personalSection?.content.fullName || "Your Name"}
+          </h1>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", fontSize: "13px", color: "#4b5563" }}>
+            {personalSection?.content.email && <span>📧 {personalSection.content.email}</span>}
+            {personalSection?.content.phone && <span>📱 {personalSection.content.phone}</span>}
+            {personalSection?.content.location && <span>📍 {personalSection.content.location}</span>}
+            {personalSection?.content.website && <span>🌐 {personalSection.content.website}</span>}
+            {personalSection?.content.linkedin && <span>💼 {personalSection.content.linkedin}</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  // Corporate Template - Professional header with color accent bar
+  const renderCorporateHeader = () => (
+    <div>
+      <div style={{ backgroundColor: headerColor, height: "8px" }} />
+      <div style={{ padding: "32px" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
+          <div style={{ flex: 1 }}>
+            <h1 style={{ fontSize: "36px", fontWeight: "700", color: "#1f2937", margin: "0 0 4px 0", letterSpacing: "-0.5px" }}>
+              {personalSection?.content.fullName || "Your Name"}
+            </h1>
+            <div style={{ height: "2px", width: "60px", backgroundColor: headerColor, margin: "8px 0 16px 0" }} />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px", fontSize: "13px", color: "#4b5563" }}>
+              {personalSection?.content.email && <span>✉ {personalSection.content.email}</span>}
+              {personalSection?.content.phone && <span>☎ {personalSection.content.phone}</span>}
+              {personalSection?.content.location && <span>⌖ {personalSection.content.location}</span>}
+              {personalSection?.content.website && <span>⚲ {personalSection.content.website}</span>}
+              {personalSection?.content.linkedin && <span>⚐ {personalSection.content.linkedin}</span>}
+            </div>
+          </div>
+          {personalSection?.content.photoUrl && (
+            <img
+              src={personalSection.content.photoUrl}
+              alt="Profile"
+              style={{
+                width: "120px",
+                height: "120px",
+                borderRadius: "4px",
+                objectFit: "cover",
+                border: `2px solid ${headerColor}`,
+                flexShrink: 0,
+              }}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <Card className="w-full max-w-4xl mx-auto bg-white">
       <CardContent className="p-0">
         <div style={{ display: "flex", flexDirection: "column", backgroundColor: "white", color: "#000" }}>
-          {/* Header with background color */}
+          {/* Render header based on template */}
           {personalSection && (
-            <div style={{ backgroundColor: headerColor, padding: "32px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
-                {/* Photo */}
-                {personalSection.content.photoUrl && (
-                  <img
-                    src={personalSection.content.photoUrl}
-                    alt="Profile"
-                    style={{
-                      width: "112px",
-                      height: "112px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      border: "4px solid white",
-                      flexShrink: 0,
-                    }}
-                  />
-                )}
-
-                <div style={{ textAlign: "center", flex: 1 }}>
-                  <h1 style={{ fontSize: "30px", fontWeight: "bold", color: "white", margin: "0 0 8px 0" }}>
-                    {personalSection.content.fullName || "Your Name"}
-                  </h1>
-                  <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", fontSize: "14px", color: "rgba(255,255,255,0.9)" }}>
-                    {personalSection.content.email && <span>{personalSection.content.email}</span>}
-                    {personalSection.content.phone && <span>{personalSection.content.phone}</span>}
-                    {personalSection.content.location && <span>{personalSection.content.location}</span>}
-                    {personalSection.content.website && <span>{personalSection.content.website}</span>}
-                    {personalSection.content.linkedin && <span>{personalSection.content.linkedin}</span>}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <>
+              {template === "modern" && renderModernHeader()}
+              {template === "minimal" && renderMinimalHeader()}
+              {template === "corporate" && renderCorporateHeader()}
+            </>
           )}
 
           {/* Main content */}
