@@ -14,25 +14,34 @@ export function ResumePreview() {
   const headerColor = currentResume.headerColor || "#3b82f6"
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-white text-black">
-      <CardContent className="p-8">
-        <div className="space-y-6">
-          {/* Header */}
+    <Card className="w-full max-w-4xl mx-auto bg-white">
+      <CardContent className="p-0">
+        <div style={{ display: "flex", flexDirection: "column", backgroundColor: "white", color: "#000" }}>
+          {/* Header with background color */}
           {personalSection && (
-            <div className="-m-8 mb-6 p-8 rounded-t-lg" style={{ backgroundColor: headerColor }}>
-              <div className="flex items-center justify-center gap-6">
-                {/* Photo - Show for all templates */}
+            <div style={{ backgroundColor: headerColor, padding: "32px" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "24px", flexWrap: "wrap" }}>
+                {/* Photo */}
                 {personalSection.content.photoUrl && (
                   <img
                     src={personalSection.content.photoUrl}
                     alt="Profile"
-                    className="w-28 h-28 rounded-full object-cover border-4 border-white flex-shrink-0"
+                    style={{
+                      width: "112px",
+                      height: "112px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: "4px solid white",
+                      flexShrink: 0,
+                    }}
                   />
                 )}
 
-                <div className="text-center flex-1">
-                  <h1 className="text-3xl font-bold mb-2 text-white">{personalSection.content.fullName || "Your Name"}</h1>
-                  <div className="flex flex-wrap justify-center gap-4 text-sm text-white/90">
+                <div style={{ textAlign: "center", flex: 1 }}>
+                  <h1 style={{ fontSize: "30px", fontWeight: "bold", color: "white", margin: "0 0 8px 0" }}>
+                    {personalSection.content.fullName || "Your Name"}
+                  </h1>
+                  <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", fontSize: "14px", color: "rgba(255,255,255,0.9)" }}>
                     {personalSection.content.email && <span>{personalSection.content.email}</span>}
                     {personalSection.content.phone && <span>{personalSection.content.phone}</span>}
                     {personalSection.content.location && <span>{personalSection.content.location}</span>}
@@ -44,151 +53,185 @@ export function ResumePreview() {
             </div>
           )}
 
-          {/* Professional Summary */}
-          {summarySection && summarySection.content.text && (
-            <div>
-              <h2 className="text-xl font-semibold mb-3" style={{ color: headerColor }}>Professional Summary</h2>
-              <p className="text-gray-700 leading-relaxed">{summarySection.content.text}</p>
-            </div>
-          )}
-
-          {/* Work Experience */}
-          {experienceSection && experienceSection.content.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: headerColor }}>Work Experience</h2>
-              <div className="space-y-4">
-                {experienceSection.content.map((exp: any, index: number) => (
-                  <div key={index} className="border-l-2 pl-4" style={{ borderColor: `${headerColor}33` }}>
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <h3 className="font-semibold">{exp.position || "Position"}</h3>
-                        <p className="font-medium" style={{ color: headerColor }}>{exp.company || "Company"}</p>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        {exp.startDate && (
-                          <span>
-                            {new Date(exp.startDate).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                            })}
-                          </span>
-                        )}
-                        {exp.startDate && exp.endDate && " - "}
-                        {exp.endDate && (
-                          <span>
-                            {new Date(exp.endDate).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                            })}
-                          </span>
-                        )}
-                        {exp.current && " - Present"}
-                      </div>
-                    </div>
-                    {exp.description && <p className="text-gray-700 text-sm leading-relaxed">{exp.description}</p>}
-                  </div>
-                ))}
+          {/* Main content */}
+          <div style={{ padding: "32px" }}>
+            {/* Professional Summary */}
+            {summarySection && summarySection.content.text && (
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: "600", color: headerColor, margin: "0 0 12px 0" }}>
+                  Professional Summary
+                </h2>
+                <p style={{ color: "#374151", lineHeight: "1.6", margin: 0 }}>{summarySection.content.text}</p>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Education */}
-          {currentResume.sections.find((s) => s.type === "education") && currentResume.sections.find((s) => s.type === "education")!.content.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: headerColor }}>Education</h2>
-              <div className="space-y-4">
-                {currentResume.sections.find((s) => s.type === "education")!.content.map((edu: any, index: number) => (
-                  <div key={index} className="border-l-2 pl-4" style={{ borderColor: `${headerColor}33` }}>
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <h3 className="font-semibold">{edu.degree || "Degree"}</h3>
-                        <p className="font-medium" style={{ color: headerColor }}>{edu.institution || "Institution"}</p>
-                        {edu.field && <p className="text-sm text-gray-600">{edu.field}</p>}
+            {/* Work Experience */}
+            {experienceSection && experienceSection.content.length > 0 && (
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: "600", color: headerColor, margin: "0 0 16px 0" }}>
+                  Work Experience
+                </h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {experienceSection.content.map((exp: any, index: number) => (
+                    <div key={index} style={{ borderLeft: `2px solid ${headerColor}33`, paddingLeft: "16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+                        <div>
+                          <h3 style={{ fontWeight: "600", margin: "0 0 4px 0" }}>{exp.position || "Position"}</h3>
+                          <p style={{ fontWeight: "500", color: headerColor, margin: 0 }}>{exp.company || "Company"}</p>
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#4b5563", textAlign: "right" }}>
+                          {exp.startDate && (
+                            <span>
+                              {new Date(exp.startDate).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                              })}
+                            </span>
+                          )}
+                          {exp.startDate && exp.endDate && " - "}
+                          {exp.endDate && (
+                            <span>
+                              {new Date(exp.endDate).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                              })}
+                            </span>
+                          )}
+                          {exp.current && " - Present"}
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-600">
-                        {edu.startDate && (
-                          <span>
-                            {new Date(edu.startDate).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                            })}
-                          </span>
-                        )}
-                        {edu.startDate && edu.endDate && " - "}
-                        {edu.endDate && (
-                          <span>
-                            {new Date(edu.endDate).toLocaleDateString("en-US", {
-                              year: "numeric",
-                              month: "short",
-                            })}
-                          </span>
-                        )}
-                      </div>
+                      {exp.description && <p style={{ color: "#374151", fontSize: "14px", lineHeight: "1.5", margin: 0 }}>{exp.description}</p>}
                     </div>
-                    {edu.gpa && <p className="text-sm text-gray-700">GPA: {edu.gpa}</p>}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Skills */}
-          {currentResume.sections.find((s) => s.type === "skills") && currentResume.sections.find((s) => s.type === "skills")!.content.categories?.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: headerColor }}>Skills</h2>
-              <div className="space-y-3">
-                {currentResume.sections.find((s) => s.type === "skills")!.content.categories.map((category: any, index: number) => (
-                  category.skills && category.skills.length > 0 && (
-                    <div key={index}>
-                      <h3 className="font-medium mb-2" style={{ color: headerColor }}>{category.name}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {category.skills.map((skill: string, skillIndex: number) => (
-                          <span
-                            key={skillIndex}
-                            className="px-3 py-1 text-sm rounded-full text-white"
-                            style={{ backgroundColor: headerColor }}
+            {/* Education */}
+            {currentResume.sections.find((s) => s.type === "education") && currentResume.sections.find((s) => s.type === "education")!.content.length > 0 && (
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: "600", color: headerColor, margin: "0 0 16px 0" }}>
+                  Education
+                </h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {currentResume.sections.find((s) => s.type === "education")!.content.map((edu: any, index: number) => (
+                    <div key={index} style={{ borderLeft: `2px solid ${headerColor}33`, paddingLeft: "16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "8px" }}>
+                        <div>
+                          <h3 style={{ fontWeight: "600", margin: "0 0 4px 0" }}>{edu.degree || "Degree"}</h3>
+                          <p style={{ fontWeight: "500", color: headerColor, margin: "0 0 4px 0" }}>{edu.institution || "Institution"}</p>
+                          {edu.field && <p style={{ fontSize: "12px", color: "#4b5563", margin: 0 }}>{edu.field}</p>}
+                        </div>
+                        <div style={{ fontSize: "12px", color: "#4b5563", textAlign: "right" }}>
+                          {edu.startDate && (
+                            <span>
+                              {new Date(edu.startDate).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                              })}
+                            </span>
+                          )}
+                          {edu.startDate && edu.endDate && " - "}
+                          {edu.endDate && (
+                            <span>
+                              {new Date(edu.endDate).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                              })}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      {edu.gpa && <p style={{ fontSize: "12px", color: "#374151", margin: 0 }}>GPA: {edu.gpa}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Skills */}
+            {currentResume.sections.find((s) => s.type === "skills") && currentResume.sections.find((s) => s.type === "skills")!.content.categories?.length > 0 && (
+              <div style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: "600", color: headerColor, margin: "0 0 16px 0" }}>
+                  Skills
+                </h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {currentResume.sections.find((s) => s.type === "skills")!.content.categories.map((category: any, index: number) => (
+                    category.skills && category.skills.length > 0 && (
+                      <div key={index}>
+                        <h3 style={{ fontWeight: "500", color: headerColor, margin: "0 0 8px 0" }}>{category.name}</h3>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                          {category.skills.map((skill: string, skillIndex: number) => (
+                            <span
+                              key={skillIndex}
+                              style={{
+                                padding: "6px 12px",
+                                fontSize: "12px",
+                                borderRadius: "20px",
+                                color: "white",
+                                backgroundColor: headerColor,
+                                display: "inline-block",
+                              }}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Projects */}
+            {currentResume.sections.find((s) => s.type === "projects") && currentResume.sections.find((s) => s.type === "projects")!.content.length > 0 && (
+              <div>
+                <h2 style={{ fontSize: "18px", fontWeight: "600", color: headerColor, margin: "0 0 16px 0" }}>
+                  Projects
+                </h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {currentResume.sections.find((s) => s.type === "projects")!.content.map((project: any, index: number) => (
+                    <div key={index} style={{ borderLeft: `2px solid ${headerColor}33`, paddingLeft: "16px" }}>
+                      <div style={{ marginBottom: "8px" }}>
+                        <h3 style={{ fontWeight: "600", margin: "0 0 4px 0" }}>{project.name || "Project Name"}</h3>
+                        {project.url && (
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ fontSize: "12px", color: headerColor, textDecoration: "none" }}
                           >
-                            {skill}
-                          </span>
-                        ))}
+                            {project.url}
+                          </a>
+                        )}
                       </div>
-                    </div>
-                  )
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Projects */}
-          {currentResume.sections.find((s) => s.type === "projects") && currentResume.sections.find((s) => s.type === "projects")!.content.length > 0 && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4" style={{ color: headerColor }}>Projects</h2>
-              <div className="space-y-4">
-                {currentResume.sections.find((s) => s.type === "projects")!.content.map((project: any, index: number) => (
-                  <div key={index} className="border-l-2 pl-4" style={{ borderColor: `${headerColor}33` }}>
-                    <div className="mb-2">
-                      <h3 className="font-semibold">{project.name || "Project Name"}</h3>
-                      {project.url && (
-                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline" style={{ color: headerColor }}>
-                          {project.url}
-                        </a>
+                      {project.description && <p style={{ color: "#374151", fontSize: "14px", lineHeight: "1.5", margin: "0 0 8px 0" }}>{project.description}</p>}
+                      {project.technologies && project.technologies.length > 0 && (
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                          {project.technologies.map((tech: string, techIndex: number) => (
+                            <span
+                              key={techIndex}
+                              style={{
+                                padding: "4px 8px",
+                                fontSize: "11px",
+                                borderRadius: "4px",
+                                backgroundColor: "#f3f4f6",
+                                color: "#374151",
+                                display: "inline-block",
+                              }}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       )}
                     </div>
-                    {project.description && <p className="text-gray-700 text-sm leading-relaxed mb-2">{project.description}</p>}
-                    {project.technologies && project.technologies.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech: string, techIndex: number) => (
-                          <span key={techIndex} className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700">
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

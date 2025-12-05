@@ -12,6 +12,12 @@ import { TemplateSelector } from "./template-selector"
 import { useResume } from "./resume-context"
 import type { Resume } from "./resume-context"
 
+declare global {
+  interface Window {
+    html2pdf?: any
+  }
+}
+
 export function ResumeBuilder() {
   const [activeTab, setActiveTab] = useState("edit")
   const { currentResume, setCurrentResume, saveResume } = useResume()
@@ -56,9 +62,41 @@ export function ResumeBuilder() {
     // Show success message
   }
 
-  const handleDownload = () => {
-    // Implement PDF download
-    console.log("Downloading resume as PDF...")
+  const handleDownload = async () => {
+    try {
+      const element = document.getElementById("resume-download")
+      if (!element) {
+        alert("Resume element not found")
+        return
+      }
+
+      // Check if html2pdf is available
+      if (!window.html2pdf) {
+        // Fallback: Create a simple print-to-PDF
+        const printWindow = window.open("", "_blank")
+        if (printWindow) {
+          printWindow.document.write(element.innerHTML)
+          printWindow.document.close()
+          setTimeout(() => {
+            printWindow.print()
+          }, 250)
+        }
+        return
+      }
+
+      const opt = {
+        margin: 10,
+        filename: `${currentResume?.title || "resume"}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
+      }
+
+      window.html2pdf().set(opt).from(element).save()
+    } catch (error) {
+      console.error("Download error:", error)
+      alert("Failed to download PDF. Please try again.")
+    }
   }
 
   if (!currentResume) {
@@ -156,7 +194,9 @@ export function ResumeBuilder() {
 
           <TabsContent value="preview" className="mt-6">
             <div className="max-w-4xl mx-auto">
-              <ResumePreview />
+              <div id="resume-download" className="mb-4">
+                <ResumePreview />
+              </div>
             </div>
           </TabsContent>
 
